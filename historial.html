@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Inventario</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f6fa;
+        }
+
+           .sidebar {
+        width: 220px;
+        height: 100vh;
+        background-color: #111c44;
+        color: white;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 16px;
+        transition: background-color 0.2s ease;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+        background-color: #1e2e68;
+    }
+
+    .sidebar hr {
+        border: 1px solid #2e3b70;
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    .sidebar .logout {
+        margin-top: auto;
+        background-color: #1f2e4d;
+    }
+        .icon { width: 20px; height: 20px; }
+
+        .logout {
+            margin-top: auto;
+            background-color: #1f2e4d;
+        }
+
+        .main-container {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        .table-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #111c44;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>TotalClean</h2>
+    <a href="menu.php"><i data-lucide="home" class="icon"></i>Inicio</a>
+    <a href="formulariousuario.html"><i data-lucide="users" class="icon"></i>Usuarios</a>
+    <a href="formularioproducto.html"><i data-lucide="package" class="icon"></i>Productos</a>
+    <a href="inventario.php"><i data-lucide="box" class="icon"></i>Inventario</a>
+    <a href="formularioProveedor.php" class="active"><i data-lucide="building-2" class="icon"></i>Proveedores</a>
+    <hr>
+    <a href="historial.html"><i data-lucide="clipboard-list" class="icon"></i>Historial</a>
+    <a href="kardex.php"><i data-lucide="layers" class="icon"></i>Kardex</a>
+    <a href="backup_bd.php" class="active"><i data-lucide="download" class="icon"></i>Backup</a>
+    <a href="logout.php" class="logout"><i data-lucide="log-out" class="icon"></i>Salir</a>
+</div>
+
+    <script>
+    lucide.createIcons(); // Activa todos los íconos
+</script>
+
+    <div class="main-container">
+        <div class="table-container">
+            <h2>Historial de Inventario</h2>
+            <table id="tablaHistorial" class="display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Tipo de Movimiento</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#tablaHistorial').DataTable({
+                ajax: {
+                    url: 'historial_inventario.php',
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'idHistorial' },
+                    { data: 'producto' },
+                    { data: 'tipo_movimiento' },
+                    { data: 'cantidad' },
+                    { data: 'fecha' }
+                ],
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'csv', 'print'],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

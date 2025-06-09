@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+       body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f6fa;
+            display: flex;
+        }
+            .sidebar {
+        width: 220px;
+        height: 100vh;
+        background-color: #111c44;
+        color: white;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 16px;
+        transition: background-color 0.2s ease;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+        background-color: #1e2e68;
+    }
+
+    .sidebar hr {
+        border: 1px solid #2e3b70;
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    .sidebar .logout {
+        margin-top: auto;
+        background-color: #1f2e4d;
+    }
+        .icon { width: 20px; height: 20px; }
+        .main-container {
+            margin-left: 220px;
+            padding: 30px;
+            flex: 1;
+        }
+        .form-container {
+            flex: 1;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .table-container {
+            flex: 2;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        form input[type="submit"] {
+            background-color: #111c44;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #1e2e68;
+        }
+
+        .btn-accion {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-accion.eliminar {
+            background-color: #dc3545;
+        }
+
+        .btn-warning {
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            background-color: #ec971f;
+            text-decoration: none;
+        }
+        
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<script src="https://unpkg.com/lucide@latest"></script>
+<body>
+
+<div class="sidebar">
+    <h2>TotalClean</h2>
+    <a href="menu.php"><i data-lucide="home" class="icon"></i>Inicio</a>
+    <a href="formulariousuario.html"><i data-lucide="users" class="icon"></i>Usuarios</a>
+    <a href="formularioproducto.html"><i data-lucide="package" class="icon"></i>Productos</a>
+    <a href="inventario.php"><i data-lucide="box" class="icon"></i>Inventario</a>
+    <a href="formularioProveedor.php" class="active"><i data-lucide="building-2" class="icon"></i>Proveedores</a>
+    <hr>
+    <a href="historial.html"><i data-lucide="clipboard-list" class="icon"></i>Historial</a>
+    <a href="kardex.php"><i data-lucide="layers" class="icon"></i>Kardex</a>
+    <a href="backup_bd.php" class="active"><i data-lucide="download" class="icon"></i>Backup</a>
+    <a href="logout.php" class="logout"><i data-lucide="log-out" class="icon"></i>Salir</a>
+</div>
+
+<script>
+    lucide.createIcons(); // Activa todos los íconos
+</script>
+
+<div class="main-container">
+    <!-- Mostrar mensajes de éxito/error -->
+    
+
+    <div class="form-container">
+        <form action="agregar_producto.php" method="POST" id="formProducto">
+            <h1>Agregar Producto</h1>
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" maxlength="100" required>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" required></textarea>
+
+            <label for="idCategoria">Categoría:</label>
+            <select id="idCategoria" name="idCategoria" required>
+                <option value="">Cargando categorías...</option>
+            </select>
+
+            <label for="idMarca">Marca:</label>
+            <select id="idMarca" name="idMarca" required>
+                <option value="">Cargando marcas...</option>
+            </select>
+
+            <label for="idFabricante">Fabricante:</label>
+            <select id="idFabricante" name="idFabricante" required>
+                <option value="">Cargando fabricantes...</option>
+            </select>
+
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" min="0" required>
+
+            <label for="precio_unitario">Precio Unitario:</label>
+            <input type="number" id="precio_unitario" name="precio_unitario" step="0.01" min="0" required>
+
+            <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+            <input type="date" id="fecha_vencimiento" name="fecha_vencimiento" required>
+
+            <input type="submit" value="Agregar Producto">
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table id="tablaProductosDT" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Marca</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Se cargará por AJAX -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Cargar datos de los selectores
+        function cargarSelectores() {
+            // Cargar categorías
+            $.getJSON('obtener_categoria.php', function(data) {
+                let options = '<option value="">Seleccione categoría</option>';
+                $.each(data.data, function(key, categoria) {
+                    options += `<option value="${categoria.idCategoria}">${categoria.nombre}</option>`;
+                });
+                $('#idCategoria').html(options);
+            });
+            
+            // Cargar marcas
+            $.getJSON('obtener_marcas.php', function(data) {
+                let options = '<option value="">Seleccione marca</option>';
+                $.each(data.data, function(key, marca) {
+                    options += `<option value="${marca.idMarca}">${marca.nombre}</option>`;
+                });
+                $('#idMarca').html(options);
+            });
+            
+            // Cargar fabricantes
+            $.getJSON('obtener_fabricantes.php', function(data) {
+                let options = '<option value="">Seleccione fabricante</option>';
+                $.each(data.data, function(key, fabricante) {
+                    options += `<option value="${fabricante.idFabricante}">${fabricante.nombre}</option>`;
+                });
+                $('#idFabricante').html(options);
+            });
+        }
+        
+        // Inicializar DataTable
+        var tabla = $('#tablaProductosDT').DataTable({
+            ajax: {
+                url: 'obtener_productos.php',
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'idProducto' },
+                { data: 'nombre' },
+                { data: 'descripcion' },
+                { data: 'categoria' },
+                { data: 'marca' },
+                { data: 'stock' },
+                { 
+                    data: 'precio_unitario',
+                    render: function(data, type, row) {
+                        return '$' + parseFloat(data).toFixed(2);
+                    }
+                },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return `
+                            <a href="editar_producto.php?id=${row.idProducto}" class="btn-warning me-1">Editar</a>
+                            <button class="btn-warning btnEliminar" style="background-color: #dc3545" data-id="${row.idProducto}">Eliminar</button>
+                        `;
+                    },
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a Excel',
+                    className: 'btn-warning',
+                    exportOptions: { columns: [0,1,2,3,4,5,6] }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: 'Exportar a PDF',
+                    className: 'btn-warning',
+                    exportOptions: { columns: [0,1,2,3,4,5,6] }
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    className: 'btn-warning',
+                    exportOptions: { columns: [0,1,2,3,4,5,6] }
+                }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            }
+        });
+
+        // Manejar eliminación de productos
+        $(document).on('click', '.btnEliminar', function() {
+            var id = $(this).data('id');
+            
+            if (confirm('¿Está seguro de eliminar este producto?')) {
+                $.ajax({
+                    url: 'eliminar_producto.php',
+                    method: 'POST',
+                    data: { id: id },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            tabla.ajax.reload();
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function() {
+                        alert('Error al comunicarse con el servidor');
+                    }
+                });
+            }
+        });
+
+        // Cargar los selectores al inicio
+        cargarSelectores();
+        
+        // Validación del formulario
+        $('#formProducto').on('submit', function(e) {
+            let valid = true;
+            
+            // Validar campos obligatorios
+            $(this).find('[required]').each(function() {
+                if (!$(this).val()) {
+                    alert(`El campo ${$(this).prev('label').text()} es obligatorio`);
+                    $(this).focus();
+                    valid = false;
+                    return false; // Salir del each
+                }
+            });
+            
+            if (!valid) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Validar fechas
+            const fechaVencimiento = new Date($('#fecha_vencimiento').val());
+            const hoy = new Date();
+            
+            if (fechaVencimiento < hoy) {
+                alert('La fecha de vencimiento no puede ser anterior a hoy');
+                $('#fecha_vencimiento').focus();
+                e.preventDefault();
+                return false;
+            }
+            
+            return true;
+        });
+    });
+</script>
+
+</body>
+</html>

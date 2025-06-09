@@ -1,0 +1,30 @@
+body {
+    background-color: black;
+    color: azure;
+}
+.grid {
+    display: grid;
+    background-color: #fff;
+}
+
+
+.numero-columnas-1 {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+
+.numero-columnas-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+
+.numero-columnas-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+.cuadro {
+    width: 100%;
+    border: 1px solid #fff;
+    background-color: rgb(77, 75, 75);
+}
